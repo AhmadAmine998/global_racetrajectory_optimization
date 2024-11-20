@@ -3,7 +3,9 @@ import numpy as np
 
 def import_track(file_path: str,
                  imp_opts: dict,
-                 width_veh: float) -> np.ndarray:
+                 width_veh: float,
+                 delimeter: str = ";"
+                 ) -> np.ndarray:
     """
     Created by:
     Alexander Heilmeier
@@ -23,7 +25,7 @@ def import_track(file_path: str,
     """
 
     # load data from csv file
-    csv_data_temp = np.loadtxt(file_path, comments='#', delimiter=',')
+    csv_data_temp = np.loadtxt(file_path, comments='#', delimiter=delimeter)
 
     # get coords and track widths out of array
     if np.shape(csv_data_temp)[1] == 3:
