@@ -28,13 +28,13 @@ file_paths = {"veh_params_file": "racecar.ini"}
 # debug and plot options -----------------------------------------------------------------------------------------------
 debug = True                                    # print console messages
 plot_opts = {"mincurv_curv_lin": False,         # plot curv. linearization (original and solution based) (mincurv only)
-             "raceline": True,                  # plot optimized path
+             "raceline": False,                  # plot optimized path
              "imported_bounds": False,          # plot imported bounds (analyze difference to interpolated bounds)
-             "raceline_curv": True,             # plot curvature profile of optimized path
+             "raceline_curv": False,             # plot curvature profile of optimized path
              "racetraj_vel": True,              # plot velocity profile
              "racetraj_vel_3d": True,          # plot 3D velocity profile above raceline
              "racetraj_vel_3d_stepsize": 1.0,   # [m] vertical lines stepsize in 3D velocity profile plot
-             "spline_normals": True,           # plot spline normals to check for crossings
+             "spline_normals": False,           # plot spline normals to check for crossings
              "mintime_plots": False}            # plot states, controls, friction coeffs etc. (mintime only)
 
 # select track file (including centerline coordinates + track widths) --------------------------------------------------
@@ -57,7 +57,7 @@ imp_opts = {"flip_imp_track": False,                # flip imported track to rev
 # 'mincurv'             minimum curvature optimization without iterative call
 # 'mincurv_iqp'         minimum curvature optimization with iterative call
 # 'mintime'             time-optimal trajectory optimization
-opt_type = 'shortest_path'
+opt_type = 'mintime'
 
 # set mintime specific options (mintime only) --------------------------------------------------------------------------
 # tpadata:                      set individual friction map data file if desired (e.g. for varmue maps), else set None,
@@ -583,3 +583,20 @@ helper_funcs_glob.src.result_plots.result_plots(plot_opts=plot_opts,
                                                 bound1_interp=bound1,
                                                 bound2_interp=bound2,
                                                 trajectory=trajectory_opt)
+
+x, y, w_left, w_right = reftrack_imp[:, 0], reftrack_imp[:, 1], reftrack_imp[:, 2], reftrack_imp[:, 3]
+# Find normal vectors to shift the bounds
+normvec = np.zeros((len(x), 2))
+normvec[:, 0] = np.gradient(y)
+normvec[:, 1] = -np.gradient(x)
+normvec /= np.linalg.norm(normvec, axis=1)[:, np.newaxis]
+bound1 = np.column_stack((x, y)) + w_left[:, np.newaxis] * normvec
+bound2 = np.column_stack((x, y)) - w_right[:, np.newaxis] * normvec
+
+# PLOT THE CENTERLINE, BOTH BOUNDARIES, AND THE RACELINE
+plt.figure()
+plt.plot(x, y, 'k-')
+plt.plot(bound1[:, 0], bound1[:, 1], 'r-')
+plt.plot(bound2[:, 0], bound2[:, 1], 'r-')
+plt.plot(trajectory_opt[:, 1], trajectory_opt[:, 2], 'b-')
+plt.show()
