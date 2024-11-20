@@ -31,7 +31,29 @@ well.
 Use the provided `requirements.txt` in the root directory of this repo, in order to install all required modules.\
 `pip3 install -r /path/to/requirements.txt`
 
-The code is developed with Ubuntu 20.04 LTS and Python 3.7.
+The code has been tested in a Python3.8 virtualenv on Ubuntu 22.04.6 LTS. To setup python3.8, the following steps can be
+used:
+
+```bash
+sudo add-apt-repository ppa:deadsnakes/ppa
+sudo apt-get update
+sudo apt-get install python3.8 python3.8-venv python3.8-distutils
+```
+
+Now you can create a virtual environment with python3.8:
+
+```bash
+virtualenv --python="/usr/bin/python3.8" optim_env
+source optim_env/bin/activate
+```
+
+You can then install the required packages using the requirements.txt file:
+
+```bash
+pip install -r requirements.txt
+```
+
+requirements.txt has been updated for compatibility with Python 3.8. 
 
 ### Solutions for possible installation problems (Windows)
 * `cvxpy`, `cython` or any other package requires a `Visual C++ compiler` -> Download the build tools for Visual Studio
