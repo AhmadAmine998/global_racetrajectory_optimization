@@ -28,9 +28,9 @@ file_paths = {"veh_params_file": "racecar.ini"}
 # debug and plot options -----------------------------------------------------------------------------------------------
 debug = True                                    # print console messages
 plot_opts = {"mincurv_curv_lin": False,         # plot curv. linearization (original and solution based) (mincurv only)
-             "raceline": False,                  # plot optimized path
-             "imported_bounds": False,          # plot imported bounds (analyze difference to interpolated bounds)
-             "raceline_curv": False,             # plot curvature profile of optimized path
+             "raceline": True,                  # plot optimized path
+             "imported_bounds": True,          # plot imported bounds (analyze difference to interpolated bounds)
+             "raceline_curv": True,             # plot curvature profile of optimized path
              "racetraj_vel": True,              # plot velocity profile
              "racetraj_vel_3d": True,          # plot 3D velocity profile above raceline
              "racetraj_vel_3d_stepsize": 1.0,   # [m] vertical lines stepsize in 3D velocity profile plot
