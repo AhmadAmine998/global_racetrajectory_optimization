@@ -55,6 +55,21 @@ pip install -r requirements.txt
 
 requirements.txt has been updated for compatibility with Python 3.8. 
 
+Note that you will still need to upgrade quadprog to version 0.1.9 as the older version throws the following error:
+```bash
+ImportError: .../site-packages/quadprog.cpython-38-x86_64-linux-gnu.so: undefined symbol: _Z7qpgen2_PdS_PiS0_S_S_S_S_S_S0_S0_S0_S0_S0_S0_S_S0_
+```
+This can be done using the following command:
+```bash
+pip install --upgrade quadprog==0.1.9
+```
+Note that this will result in an incompatibility error between `trajectory-planning-helpers` and `quadprog`:
+```bash
+ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.
+trajectory-planning-helpers 0.76 requires quadprog==0.1.7, but you have quadprog 0.1.9 which is incompatible.
+```
+You can safely ignore this as the requirements for trajectory-planning-helpers were set with strict equality. quadprog 0.1.9 still works with the trajectory-planning-helpers package.
+
 ### Solutions for possible installation problems (Windows)
 * `cvxpy`, `cython` or any other package requires a `Visual C++ compiler` -> Download the build tools for Visual Studio
 2019 (https://visualstudio.microsoft.com/de/downloads/ -> tools for Visual Studio 2019 -> build tools), install them and
