@@ -37,7 +37,7 @@ used:
 ```bash
 sudo add-apt-repository ppa:deadsnakes/ppa
 sudo apt-get update
-sudo apt-get install python3.8 python3.8-venv python3.8-distutils
+sudo apt-get install python3.8 python3.8-venv python3.8-distutils python3.8-dev
 ```
 
 Now you can create a virtual environment with python3.8:
